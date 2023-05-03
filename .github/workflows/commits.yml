@@ -12,6 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Get tags
+        run: git fetch --tags origin
+
       - name: Generate
         run: |
           git log --oneline --format=%s $(git describe --tags --abbrev=0 HEAD^)..HEAD >release.log
