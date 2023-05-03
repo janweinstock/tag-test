@@ -16,24 +16,13 @@ jobs:
       - name: Build
         run: make && tar -czvf hello.tar.gz hello
 
-      - name: Release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{github.ref}}
-          release_name: Release ${{github.ref}}
-          body: Release generated with tag ${{github.ref}}
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        id: create_release
+      - name: Identify
+        run: echo ${{github.sha}} > Release.txt
 
-      - name: Assets
-        uses: actions/upload-release-asset@v1
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{steps.create_release.outputs.upload_url}}
-          asset_path: hello.tar.gz
-          asset_name: hello.tar.gz
-          asset_content_type: application/tar+gzip
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          files: |
+            Release.txt
+            hello.tar.gz
+
