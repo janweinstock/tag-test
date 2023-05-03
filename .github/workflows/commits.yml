@@ -1,0 +1,24 @@
+name: genlog
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  genlog:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Generate
+        run: |
+          git log --oneline --format=%s $(git describe --tags --abbrev=0 HEAD^)..HEAD >release.log
+          cat release.log
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-log
+          path: ./release.log
