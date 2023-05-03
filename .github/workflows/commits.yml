@@ -17,6 +17,7 @@ jobs:
 
       - name: Generate
         run: |
+          git describe --tags --abbrev=0 HEAD^
           git log --oneline --format=%s $(git describe --tags --abbrev=0 HEAD^)..HEAD >release.log
           cat release.log
 
