@@ -7,8 +7,8 @@ on:
 
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -16,13 +16,44 @@ jobs:
       - name: Build
         run: make && tar -czvf hello.tar.gz hello
 
-      - name: Identify
-        run: echo ${{github.sha}} > Release.txt
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: hello.tar.gz
+          path: ./hello.tar.gz
+
+  gensha:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Generate
+        run: echo ${{github.sha}} > release.txt
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: release.txt
+          path: ./release.txt
+
+  release:
+    runs-on: ubuntu-22.04
+    needs: [build, sha]
+    steps:
+      - name: Download binary
+        uses: actions/download-artifact@v3
+        with:
+          name: hello.tar.gz
+
+      - name: Download sha
+        uses: actions/download-artifact@v3
+        with:
+          name: release.txt
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            Release.txt
+            release.txt
             hello.tar.gz
-
