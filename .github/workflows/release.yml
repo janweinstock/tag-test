@@ -39,7 +39,7 @@ jobs:
 
   release:
     runs-on: ubuntu-22.04
-    needs: [build, sha]
+    needs: [build, gensha]
     steps:
       - name: Download binary
         uses: actions/download-artifact@v3
