@@ -57,6 +57,12 @@ jobs:
         with:
           name: release
 
+      - name: Debug:
+        run: |
+          ls ./.github/actions/gh-release/
+          ls ./.github/actions/gh-release/action.yml
+          pwd
+
       - name: Release
         uses: ./.github/actions/gh-release
         with:
