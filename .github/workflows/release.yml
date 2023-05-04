@@ -47,6 +47,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [build, gensha]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Download binary
         uses: actions/download-artifact@v3
         with:
