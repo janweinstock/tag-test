@@ -59,6 +59,7 @@ jobs:
 
       - name: Debug
         run: |
+          pwd
           ls ./.github/actions/gh-release/
           ls ./.github/actions/gh-release/action.yml
           pwd
