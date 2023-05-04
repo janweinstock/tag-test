@@ -58,7 +58,7 @@ jobs:
           name: release
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: ./.github/actions/gh-release
         with:
           body_path: ./release.log
           files: |
