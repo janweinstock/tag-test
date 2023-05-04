@@ -57,7 +57,7 @@ jobs:
         with:
           name: release
 
-      - name: Debug:
+      - name: Debug
         run: |
           ls ./.github/actions/gh-release/
           ls ./.github/actions/gh-release/action.yml
